@@ -2,6 +2,19 @@ package token
 
 type TokenType string
 
+var keywords = map[string]TokenType{
+	"fn": FUNCTION,
+	"let": LET,
+}
+
+func LookupIndent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	} else {
+		return IDENT
+	}
+}
+
 const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"
@@ -32,3 +45,4 @@ type Token struct {
 	Type TokenType
 	Literal string
 }
+
