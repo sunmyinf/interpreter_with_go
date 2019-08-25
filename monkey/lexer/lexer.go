@@ -3,11 +3,12 @@ package lexer
 import (
 	"github.com/sunmyinf/interpreter_with_go/monkey/token"
 )
+
 type Lexer struct {
-	input        string 
-	position     int    // 入力における現在の位置
-	readPosition int    // これから読み込む位置
-	ch           byte   // 現在検査中の文字
+	input        string
+	position     int  // 入力における現在の位置
+	readPosition int  // これから読み込む位置
+	ch           byte // 現在検査中の文字
 }
 
 func New(input string) *Lexer {
@@ -18,7 +19,7 @@ func New(input string) *Lexer {
 
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
-		l.ch = 0	
+		l.ch = 0
 	} else {
 		l.ch = l.input[l.readPosition]
 	}
@@ -35,7 +36,7 @@ func (l *Lexer) peekChar() byte {
 	}
 }
 
-func(l *Lexer) NextToken() token.Token {
+func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
 	l.skipWhitespace()
@@ -89,7 +90,7 @@ func(l *Lexer) NextToken() token.Token {
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
-			tok.Type = token.LookupIndent(tok.Literal)
+			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
 			tok.Type = token.INT
